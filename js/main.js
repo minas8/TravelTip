@@ -53,6 +53,8 @@ function handleSearch(loc) {
                     mapService.addMarker({ lat: data.results[0].geometry.location.lat, lng: data.results[0].geometry.location.lng });
                 }
             ).catch(console.warn);
+        locService.addLoc(data.results[0].formatted_address, data.results[0].geometry.location.lat, data.results[0].geometry.location.lng)
+            .then(() => renderLocations())
     })
 }
 
@@ -63,10 +65,11 @@ function renderLocations() {
             // console.log('locs', locs);
             const strHTMLs = locs.map(loc =>
                 `
-                <tr class="location-item">                    
+                <tr class="location-item">
+                    <td>${loc.id}</td>
                     <td>${loc.name}</td>
-                    <td>${loc.lat}</td>
-                    <td>${loc.lng}</td>
+                    <td>${loc.lat.toFixed(6)}</td>
+                    <td>${loc.lng.toFixed(6)}</td>
                     <td>${loc.weather}</td>
                     <td>${loc.createdAt === 0 ? '' : new Date(loc.createdAt).toLocaleDateString(navigator.language)}</td>
                     <td>${loc.updatedAt === 0 ? '' : new Date(loc.updatedAt).toLocaleDateString(navigator.language)}</td>
@@ -92,6 +95,7 @@ function renderLocations() {
 
 function addEventListeners() {
     // Event Delegation - For Delete
+    console.log('btn-delete:', document.querySelector('.btn-delete'));
     document.querySelector('.btn-delete').onclick = function (ev) {
         if (!ev.target.dataset.id) return;
         const locId = ev.target.dataset.id;
@@ -99,11 +103,13 @@ function addEventListeners() {
         renderLocations();
     }
     // Event Delegation - For Go
+    console.log('btn-go:', document.querySelector('.btn-go'));
     document.querySelector('.btn-go').onclick = function (ev) {
         if (!ev.target.dataset.lat && !ev.target.dataset.lng) return;
         const lat = ev.target.dataset.lat;
         const lng = ev.target.dataset.lng;
         mapService.panTo(lat, lng);
+        // mapService.addMarker({ lat, lng });
     }
 }
 

@@ -4,9 +4,9 @@ function makeId(length = 8) {
     for (var i = 0; i < length; i++) {
         txt += possible.charAt(Math.floor(Math.random() * possible.length));
     }
-    return Promise.resolve(txt);
+    return txt; //Promise.resolve(txt);
 }
 
 export const utilService = {
-    makeId: makeId
+    makeId
 }
