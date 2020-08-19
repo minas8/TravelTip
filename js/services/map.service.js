@@ -12,8 +12,34 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 zoom: 15
             })
             console.log('Map!', map);
+
+            // // Configure the click listener.
+            // map.addListener('click', function (mapsMouseEvent) {
+            //     getCurrentPos(mapsMouseEvent);
+            //     // return new Promise((resolve, reject) => {
+            //     //     if (mapsMouseEvent.latLng.toString() === '') resolve('Failed to get location')
+            //     //     else resolve(getCurrentPos);
+            //     //     // navigator.geolocation.getCurrentPosition(resolve, reject)
+            //     // })
+
+            //     // // Close the current InfoWindow.
+            //     // infoWindow.close();
+
+            //     // // Create a new InfoWindow.
+            //     // infoWindow = new google.maps.InfoWindow({ position: mapsMouseEvent.latLng });
+            //     // infoWindow.setContent(mapsMouseEvent.latLng.toString());
+            //     // infoWindow.open(map);
+            // });
         })
 }
+
+// function getCurrentPos(mapsMouseEvent) {
+//     return new Promise((resolve, reject) => {
+//         if (mapsMouseEvent.latLng.toString() === '') reject('Failed to get location')
+//         else resolve(mapsMouseEvent.latLng);
+//         // navigator.geolocation.getCurrentPosition(resolve, reject)
+//     })
+// }
 
 function addMarker(loc) {
     var marker = new google.maps.Marker({
@@ -63,4 +89,5 @@ export const mapService = {
     addMarker,
     panTo,
     geoCode
+    // getCurrentPos
 }

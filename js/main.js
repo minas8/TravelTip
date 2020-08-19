@@ -1,5 +1,5 @@
-import locService from './services/loc.service.js'
-import mapService from './services/map.service.js'
+import { locService } from './services/loc.service.js'
+import { mapService } from './services/map.service.js'
 //import getWeather from './services/weather.service.js' // ad weather api
 
 document.querySelector('.go').addEventListener('click', handleSearch);
@@ -63,7 +63,12 @@ function renderLocations() {
             document.querySelector('.locations-list').innerHTML = strHTMLs.join('');
             addEventListeners();
         })
+        .catch(err => console.log('Error is:', err))
 }
+// function renderModal() {
+
+
+// }
 
 function addEventListeners() {
     // Event Delegation - For Delete
@@ -88,6 +93,27 @@ window.onload = () => {
         .then(() => {
             mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
         })
+        // .then(() => {
+        //     mapService.getCurrentPos()
+        //         .then(latLng => {
+        //             const lat = mapsMouseEvent.latLng.lat();
+        //             // renderModal()
+        //             // locService.addLoc(lat, lng);
+        //         })
+        //     // // Event Delegation - For map
+        //     // document.querySelector('.map').click = function (ev) {
+        //     //     log('ev:', ev);
+        //     //     // if (!ev.target.dataset.lat && !ev.target.dataset.lng) return;
+        //     //     // const lat = ev.target.dataset.lat;
+        //     //     // const lng = ev.target.dataset.lng;
+        //     //     // mapService.panTo(lat, lng);
+
+
+        //     //     // const lat = mapsMouseEvent.latLng.lat();
+        //     //     // renderModal()
+        //     //     // locService.addLoc(lat, lng);
+        //     // }
+        // })
         .catch(console.log('INIT MAP ERROR'));
 
     getPosition()
@@ -99,6 +125,19 @@ window.onload = () => {
             console.log('Cannot get user-position', err);
         })
 }
+// //.addEventListener('keyup', renderModal);
+// document.querySelector('.map').click = function (ev) {
+//     log('ev:', ev);
+//     // if (!ev.target.dataset.lat && !ev.target.dataset.lng) return;
+//     // const lat = ev.target.dataset.lat;
+//     // const lng = ev.target.dataset.lng;
+//     // mapService.panTo(lat, lng);
+
+
+//     // const lat = mapsMouseEvent.latLng.lat();
+//     // renderModal()
+//     // locService.addLoc(lat, lng);
+// }
 
 document.querySelector('.btn').addEventListener('click', (ev) => {
     console.log('Aha!', ev.target);
