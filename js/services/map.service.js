@@ -1,9 +1,3 @@
-export default {
-    initMap,
-    addMarker,
-    panTo,
-    geoCode
-}
 
 var map;
 
@@ -14,9 +8,9 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             console.log('google available');
             map = new google.maps.Map(
                 document.querySelector('#map'), {
-                    center: { lat, lng },
-                    zoom: 15
-                })
+                center: { lat, lng },
+                zoom: 15
+            })
             console.log('Map!', map);
         })
 }
@@ -61,4 +55,12 @@ function _connectGoogleApi() {
         elGoogleApi.onload = resolve;
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
+}
+
+
+export const mapService = {
+    initMap,
+    addMarker,
+    panTo,
+    geoCode
 }

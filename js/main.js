@@ -90,7 +90,7 @@ window.onload = () => {
         })
         .catch(console.log('INIT MAP ERROR'));
 
-    locService.getPosition()
+    getPosition()
         .then(pos => {
 
             console.log('User position is:', pos.coords);
@@ -104,3 +104,11 @@ document.querySelector('.btn').addEventListener('click', (ev) => {
     console.log('Aha!', ev.target);
     mapService.panTo(35.6895, 139.6917);
 })
+
+function getPosition() {
+    console.log('Getting Pos');
+
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject)
+    })
+}
