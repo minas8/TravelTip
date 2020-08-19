@@ -162,11 +162,58 @@ h2 {
 
 }
 
+.locations-container {
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 55%;
+    /* background-color: #555555; */
+}
 .locations-table {
     margin-top: 10px;
-    ;
-    display: flex;
-    justify-content: center;
+    border-spacing: 1;
+    width: 100%;
+    text-align: left;
+    padding: 5px;
+    /* display: flex; */
+    /* justify-content: center; */
+}
+.locations-table th {
+    background-color: #555555;
+    /* border-bottom: 1px solid rgb(36, 36, 36); */
+}
+.locations-table th,.locations-table td {
+    /* border-right: 1px solid rgb(36, 36, 36); */
+    padding: 5px;
+}
+.locations-table tr:nth-child(even) {
+    background-color: #555555;
+}
+.locations-table tr:nth-child(odd) {
+    background-color: #777777;
+}
+.location-item button {
+    box-shadow: 0px 1px 0px 0px #fff6af;
+    max-width: fit-content;
+    background-color: #ffec64;
+    border-radius: 6px;
+    border: 1px solid #ffaa22;
+    display: inline-block;
+    cursor: pointer;
+    color: #333333;
+    font-family: Arial;
+    font-size: 15px;
+    font-weight: bold;
+    padding: 6px 24px;
+    text-decoration: none;
+    text-shadow: 0px 1px 0px #ffee66;
+}
+.location-item button:hover {
+    background: linear-gradient(to bottom, #ffab23 5%, #ffec64 100%);
+    background-color: #ffab23;
+}
+.location-item button:active {
+    position: relative;
+    top: 1px;
 }
 
 .weather-details-container {

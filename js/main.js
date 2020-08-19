@@ -32,7 +32,6 @@ window.onload = () => {
     }
 }
 
-
 // button my location
 function handleSearch(loc) {
     let input;
@@ -56,6 +55,7 @@ function handleSearch(loc) {
             ).catch(console.warn);
     })
 }
+
 // 6. Render the locations table:
 function renderLocations() {
     locService.getLocs()
@@ -63,20 +63,17 @@ function renderLocations() {
             // console.log('locs', locs);
             const strHTMLs = locs.map(loc =>
                 `
-                <tr class="location-item">
-                    <td>${loc.id}</td>
+                <tr class="location-item">                    
                     <td>${loc.name}</td>
                     <td>${loc.lat}</td>
                     <td>${loc.lng}</td>
                     <td>${loc.weather}</td>
-                    <td>${loc.createdAt}</td>
-                    <td>${loc.updatedAt}</td>
+                    <td>${loc.createdAt === 0 ? '' : new Date(loc.createdAt).toLocaleDateString(navigator.language)}</td>
+                    <td>${loc.updatedAt === 0 ? '' : new Date(loc.updatedAt).toLocaleDateString(navigator.language)}</td>
                     <td>
                         <button class="btn-go" data-lat="${loc.lat}" data-lng="${loc.lng}">
                              Go
                          </button>
-                    </td>
-                    <td>
                         <button class="btn-delete" data-id="${loc.id}">
                              Delete
                          </button>
@@ -89,9 +86,8 @@ function renderLocations() {
         })
         .catch(err => console.log('Error is:', err))
 }
+
 // function renderModal() {
-
-
 // }
 
 function addEventListeners() {
@@ -163,10 +159,11 @@ window.onload = () => {
 //     // locService.addLoc(lat, lng);
 // }
 
-document.querySelector('.btn').addEventListener('click', (ev) => {
-    console.log('Aha!', ev.target);
-    mapService.panTo(35.6895, 139.6917);
-})
+
+// document.querySelector('.btn').addEventListener('click', (ev) => {
+//     console.log('Aha!', ev.target);
+//     mapService.panTo(35.6895, 139.6917);
+// })
 
 function handleUserLoc() {
 
