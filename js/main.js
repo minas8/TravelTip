@@ -4,10 +4,11 @@ import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 
 export function init() {
-    renderItems();
+    renderLocations();
 }
 
-function renderItems() {
+// 6. Render the locations table:
+function renderLocations() {
     locService.getLocs()
         .then(locs => {
             // console.log('locs', locs);
@@ -22,12 +23,12 @@ function renderItems() {
                     <td>${loc.createdAt}</td>
                     <td>${loc.updatedAt}</td>
                     <td>
-                        <button class="btn btn-go" data-id="${loc.id}" data-lat="${loc.lat}" data-lng="${loc.lng}">
+                        <button class="btn-go" data-lat="${loc.lat}" data-lng="${loc.lng}">
                              Go
                          </button>
                     </td>
                     <td>
-                        <button class="btn btn-delete" data-id="${loc.id}">
+                        <button class="btn-delete" data-id="${loc.id}">
                              Delete
                          </button>
                     </td>
@@ -53,16 +54,29 @@ function renderItems() {
                 // `
             )
             document.querySelector('.locations-list').innerHTML = strHTMLs.join('');
+            addEventListeners();
         })
 }
 
-
-window.addEventListener('load', () => {
-    // console.log('Ready');
-    init();
-})
+function addEventListeners() {
+    // Event Delegation - For Delete
+    document.querySelector('.btn-delete').onclick = function (ev) {
+        if (!ev.target.dataset.id) return;
+        const locId = ev.target.dataset.id;
+        locService.removeLocById(locId)
+        renderLocations();
+    }
+    // Event Delegation - For Go
+    document.querySelector('.btn-go').onclick = function (ev) {
+        if (!ev.target.dataset.lat && !ev.target.dataset.lng) return;
+        const lat = ev.target.dataset.lat;
+        const lng = ev.target.dataset.lng;
+        mapService.panTo(lat, lng);
+    }
+}
 
 window.onload = () => {
+    init();
     mapService.initMap()
         .then(() => {
 
@@ -78,6 +92,8 @@ window.onload = () => {
         .catch(err => {
             console.log('Cannot get user-position', err);
         })
+
+
 
 }
 
