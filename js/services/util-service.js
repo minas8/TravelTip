@@ -7,8 +7,6 @@ function makeId(length = 8) {
     return Promise.resolve(txt);
 }
 
-
-
 export const utilService = {
     makeId: makeId
 }

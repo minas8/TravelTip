@@ -1,15 +1,39 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
-//import getWeather from './services/weather.service.js' // ad weather api
+import weatherService from './services/weather.service.js'
 
 document.querySelector('.go').addEventListener('click', handleSearch);
 document.querySelector('.myLoc').addEventListener('click', handleUserLoc);//add a func
-document.querySelector('.search').addEventListener('keypress', checkIfEnter);//add a func
+//document.querySelector('.search').addEventListener('keypress', checkIfEnter);//add a func
 
 export function init() {
     renderLocations();
 }
 
+document.body.onload = () => {
+    handleUserLoc();
+}
+
+window.onload = () => {
+    let urlParams = new URLSearchParams(window.location.search);
+    let queryLat = +urlParams.get('lat');
+    let queryLng = +urlParams.get('lng');
+    let pos = { lat: queryLat, lng: queryLng }
+    if (queryLat && queryLng) {
+        mapService.initMap(queryLat, queryLng).then(() => {
+            geoService.getGeocodeByLatLng(pos).then(geocode => {
+                renderLocationName(geocode.results[0].formatted_address);
+            })
+            weatherService.getWeatherByPos(pos).then(renderWeatherDetails)
+        })
+    } else {
+        mapService.initMap()
+            .then(setMapToCurrentLocation)
+    }
+}
+
+
+// button my location
 function handleSearch(loc) {
     let input;
     if (typeof loc !== 'string') input = document.querySelector('.search').value;
@@ -116,7 +140,7 @@ window.onload = () => {
         // })
         .catch(console.log('INIT MAP ERROR'));
 
-    getPosition()
+    locService.getPosition()
         .then(pos => {
 
             console.log('User position is:', pos.coords);
@@ -144,10 +168,22 @@ document.querySelector('.btn').addEventListener('click', (ev) => {
     mapService.panTo(35.6895, 139.6917);
 })
 
-function getPosition() {
-    console.log('Getting Pos');
+function handleUserLoc() {
 
-    return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject)
-    })
+    let userPos = locService.getPosition()
+        .then(pos => {
+            mapService.initMap(pos.coords.latitude, pos.coords.longitude)
+                .then(
+                    () => {
+                        mapService.addMarker({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+                    }
+                ).catch(console.warn);
+
+            let weather = getWeather.getWeather(pos.coords.latitude, pos.coords.longitude)
+            weather.then(weatData => {
+                handleSearch(weatData.name);
+            })
+
+        })
+
 }

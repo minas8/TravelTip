@@ -1,7 +1,7 @@
 
 var map;
 
-function initMap(lat = 32.0749831, lng = 34.9120554) {
+function initMap(lat = -22.906847, lng = -43.172897) {
     console.log('InitMap');
     return _connectGoogleApi()
         .then(() => {
@@ -11,8 +11,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
                 center: { lat, lng },
                 zoom: 15
             })
-            console.log('Map!', map);
-
+            console.log('wow!', map);
             // // Configure the click listener.
             // map.addListener('click', function (mapsMouseEvent) {
             //     getCurrentPos(mapsMouseEvent);
@@ -29,7 +28,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             //     // infoWindow = new google.maps.InfoWindow({ position: mapsMouseEvent.latLng });
             //     // infoWindow.setContent(mapsMouseEvent.latLng.toString());
             //     // infoWindow.open(map);
-            // });
+            // })
         })
 }
 
@@ -82,8 +81,6 @@ function _connectGoogleApi() {
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
 }
-
-
 export const mapService = {
     initMap,
     addMarker,
