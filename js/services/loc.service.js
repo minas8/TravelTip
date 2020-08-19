@@ -53,10 +53,7 @@ function getPosition() {
     })
 }
 
-
-
-
-export const locService = {
+export default {
     getLocs: getLocs,
     getPosition: getPosition,
     addLoc: addLoc,
