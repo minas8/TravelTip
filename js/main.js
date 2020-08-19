@@ -1,10 +1,10 @@
 import {locService} from './services/loc.service.js'
 import {mapService} from './services/map.service.js'
-//import getWeather from './services/weather.service.js' // ad weather api
+import weatherService from './services/weather.service.js'
 
 document.querySelector('.go').addEventListener('click', handleSearch);
 document.querySelector('.myLoc').addEventListener('click', handleUserLoc);//add a func
-document.querySelector('.search').addEventListener('keypress', checkIfEnter);//add a func
+//document.querySelector('.search').addEventListener('keypress', checkIfEnter);//add a func
 
 export function init() {
     renderLocations();
@@ -13,6 +13,25 @@ export function init() {
 document.body.onload = () => {
     handleUserLoc();
 }
+
+window.onload = () => {
+    let urlParams = new URLSearchParams(window.location.search);
+    let queryLat = +urlParams.get('lat');
+    let queryLng = +urlParams.get('lng');
+    let pos = { lat: queryLat, lng: queryLng }
+    if (queryLat && queryLng) {
+        mapService.initMap(queryLat, queryLng).then(() => {
+            geoService.getGeocodeByLatLng(pos).then(geocode => {
+                renderLocationName(geocode.results[0].formatted_address);
+            })
+            weatherService.getWeatherByPos(pos).then(renderWeatherDetails)
+        })
+    } else {
+        mapService.initMap()
+            .then(setMapToCurrentLocation)
+    }
+}
+
 
 // button my location
 function handleSearch(loc) {
