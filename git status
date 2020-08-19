@@ -1,0 +1,48 @@
+[33mcommit dbe9b3f60cb42569cb48d1cdf43502e1628b0ed9[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: minas8 <minash.8@gmail.com>
+Date:   Wed Aug 19 20:34:58 2020 +0300
+
+    fixing conflicts
+
+[33mcommit 793cd0646062b652c91c74ca360809f8df2c1263[m
+Author: Ido Oren <idoorenlil@gmail.com>
+Date:   Wed Aug 19 20:20:00 2020 +0300
+
+    add part of the css
+
+[33mcommit 4869873fc9efb900e66745a1155d109405255e98[m
+Merge: 94dbe65 f1820da
+Author: minas8 <minash.8@gmail.com>
+Date:   Wed Aug 19 19:57:51 2020 +0300
+
+    Merge branch 'master' of https://github.com/minas8/TravelTip into master
+
+[33mcommit 94dbe652f6cd621b5145fbe83957eac1f3666fb2[m
+Author: minas8 <minash.8@gmail.com>
+Date:   Wed Aug 19 19:10:30 2020 +0300
+
+    add save to storage, bottons go & delete
+
+[33mcommit f1820dab083e573c40170e8b737f225388fbf551[m
+Author: Ido Oren <idoorenlil@gmail.com>
+Date:   Wed Aug 19 18:18:07 2020 +0300
+
+    placed the map finally
+
+[33mcommit 990e2f2597bf862cdceba2748bf330630f0c75e7[m
+Author: minas8 <minash.8@gmail.com>
+Date:   Wed Aug 19 16:46:03 2020 +0300
+
+    add locations table
+
+[33mcommit 0d4b112a5ab82e76a1e73f760fbcfdfee6f58992[m
+Author: minas8 <minash.8@gmail.com>
+Date:   Wed Aug 19 14:03:10 2020 +0300
+
+    added working gitignore file
+
+[33mcommit 7ee6ee92ce1671e5bd50b0eeb7e2e468bf2b8588[m
+Author: minas8 <minash.8@gmail.com>
+Date:   Wed Aug 19 13:48:52 2020 +0300
+
+    starter first commit

@@ -1,5 +1,5 @@
-import locService from './services/loc.service.js'
-import mapService from './services/map.service.js'
+import {locService} from './services/loc.service.js'
+import {mapService} from './services/map.service.js'
 //import getWeather from './services/weather.service.js' // ad weather api
 
 document.querySelector('.go').addEventListener('click', handleSearch);
@@ -10,6 +10,11 @@ export function init() {
     renderLocations();
 }
 
+document.body.onload = () => {
+    handleUserLoc();
+}
+
+// button my location
 function handleSearch(loc) {
     let input;
     if (typeof loc !== 'string') input = document.querySelector('.search').value;
@@ -90,7 +95,7 @@ window.onload = () => {
         })
         .catch(console.log('INIT MAP ERROR'));
 
-    getPosition()
+    locService.getPosition()
         .then(pos => {
 
             console.log('User position is:', pos.coords);
@@ -105,10 +110,22 @@ document.querySelector('.btn').addEventListener('click', (ev) => {
     mapService.panTo(35.6895, 139.6917);
 })
 
-function getPosition() {
-    console.log('Getting Pos');
+function handleUserLoc() {
 
-    return new Promise((resolve, reject) => {
-        navigator.geolocation.getCurrentPosition(resolve, reject)
-    })
+    let userPos = locService.getPosition()
+        .then(pos => {
+            mapService.initMap(pos.coords.latitude, pos.coords.longitude)
+                .then(
+                    () => {
+                        mapService.addMarker({ lat: pos.coords.latitude, lng: pos.coords.longitude });
+                    }
+                ).catch(console.warn);
+
+            let weather = getWeather.getWeather(pos.coords.latitude, pos.coords.longitude)
+            weather.then(weatData => {
+                handleSearch(weatData.name);
+            })
+
+        })
+
 }

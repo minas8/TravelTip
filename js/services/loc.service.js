@@ -45,10 +45,17 @@ function removeLocById(locId) {
     return Promise.resolve();
 }
 
+function getPosition() {
+    console.log('Getting Pos');
 
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject)
+    })
+}
 
-export const locService = {
-    getLocs,
-    addLoc,
-    removeLocById
+export  const locService = {
+    getLocs: getLocs,
+    getPosition: getPosition,
+    addLoc: addLoc,
+    removeLocById: removeLocById
 }
