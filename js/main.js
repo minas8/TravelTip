@@ -1,12 +1,36 @@
-console.log('Main!');
+import locService from './services/loc.service.js'
+import mapService from './services/map.service.js'
+//import getWeather from './services/weather.service.js' // ad weather api
 
-import { locService } from './services/loc.service.js'
-import { mapService } from './services/map.service.js'
+document.querySelector('.go').addEventListener('click', handleSearch);
+document.querySelector('.myLoc').addEventListener('click', handleUserLoc);//add a func
+document.querySelector('.search').addEventListener('keypress', checkIfEnter);//add a func
 
 export function init() {
-    renderItems();
-}
+    renderItems();}
 
+function handleSearch(loc) {
+    let input;
+    if (typeof loc !== 'string') input = document.querySelector('.search').value;
+    else input = loc;
+    console.log(input)
+    let geoCodeData = mapService.geoCode(input);
+    let strHtml = '';
+    let strWeatHtml = '';
+    geoCodeData.then(data => {
+        console.log(data)
+        strHtml += ` Location:  ${data.results[0].formatted_address}
+        `
+        document.querySelector('h2').innerText = strHtml;
+
+        mapService.initMap(data.results[0].geometry.location.lat, data.results[0].geometry.location.lng)
+            .then(
+                () => {
+                    mapService.addMarker({ lat: data.results[0].geometry.location.lat, lng: data.results[0].geometry.location.lng });
+                }
+            ).catch(console.warn);
+        })
+}
 function renderItems() {
     locService.getLocs()
         .then(locs => {
@@ -33,34 +57,15 @@ function renderItems() {
                     </td>
                 </tr>
             `
-
-                // `
-                // <div class="location-item">
-                //     <div>${loc.id}</div>
-                //     <div>${loc.name}</div>
-                //     <div>${loc.lat}</div>
-                //     <div>${loc.lng}</div>
-                //     <div>${loc.weather}</div>
-                //     <div>${loc.createdAt}</div>
-                //     <div>${loc.updatedAt}</div>
-                //     <button class="btn btn-go" data-id="${loc.id}" data-lat="${loc.lat}" data-lng="${loc.lng}">
-                //         Goto location
-                //     </button>
-                //     <button class="btn btn-go" data-id="${loc.id}" data-lat="${loc.lat}" data-lng="${loc.lng}">
-                //         D
-                //     </button>
-                // </div>
-                // `
             )
             document.querySelector('.locations-list').innerHTML = strHTMLs.join('');
         })
 }
 
-
-window.addEventListener('load', () => {
-    // console.log('Ready');
-    init();
-})
+ window.addEventListener('load', () => {
+     // console.log('Ready');
+     init();
+ })
 
 window.onload = () => {
     mapService.initMap()

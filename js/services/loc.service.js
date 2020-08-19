@@ -1,20 +1,17 @@
-import { storageService } from './storage-service.js';
+var locs = [{ lat: 31.761134, lng: 35.186795 }]
 
-var locs = [
-    { id: 1, name: 'loc1', lat: 32.22, lng: 33.11, weather: '', createdAt: Date.now(), updatedAt: Date.now() },
-    { id: 2, name: 'loc2', lat: 31.22, lng: 34.11, weather: '', createdAt: Date.now(), updatedAt: Date.now() }
-];
+function getLocs1() {
+    return Promise.resolve(locs);
+}
 
 function getLocs() {
-    // TODO: load from storage
     return new Promise((resolve, reject) => {
         setTimeout(() => {
             resolve(locs);
-        }, 2000)
+        }, 1000)
     });
-    // TODO: save to storage
-}
 
+}
 
 function getPosition() {
     console.log('Getting Pos');
@@ -24,10 +21,7 @@ function getPosition() {
     })
 }
 
-
-
-
-export const locService = {
+export default {
     getLocs: getLocs,
     getPosition: getPosition
 }
